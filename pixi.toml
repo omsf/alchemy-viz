@@ -220,6 +220,15 @@ description = "Install the built wheel into a throwaway venv with no gufe, and u
 cmd = "bash scripts/check_wheel.sh"
 depends-on = ["dist"]
 
+[tasks.release]
+description = "Cut and push a release tag: `pixi run release 0.1.2`. With no version, reports the current one."
+# The tag is the release - publish-pypi.yml builds from it and uploads through
+# trusted publishing - so the script checks what it can before the push and
+# makes you type the version back. No `depends-on`: the gates that matter run in
+# CI against the tagged commit, and making a report of the current version wait
+# on a full build would only teach people to skip the task.
+cmd = "bash scripts/release.sh"
+
 [tasks.npm-dist]
 description = "Fill npm/dist/, leaving npm/ ready for npm publish."
 # `npm/` is the package: `package.json` and `README.md` are checked in and
