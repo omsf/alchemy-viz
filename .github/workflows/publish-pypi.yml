@@ -45,7 +45,18 @@ jobs:
       # readme_renderer[md] is what makes `twine check` below actually render the
       # Markdown long description. Without it readme_renderer has no Markdown
       # backend, and the check passes whatever it is given.
-      - run: python -m pip install --upgrade build twine 'readme_renderer[md]'
+      - run: python -m pip install --upgrade build twine setuptools-scm 'readme_renderer[md]'
+
+      # setuptools-scm reads the version out of git, and the README rewrite below
+      # modifies a tracked file. A dirty tree is not the tag, so v0.1.3 came out
+      # as 0.1.4.dev0+g620fa87fa.d20261012 - a local version, which PyPI refuses
+      # outright. Reading the version off the clean checkout and pinning it keeps
+      # the rewrite from reaching the version at all.
+      - name: freeze the version while the tree is still clean
+        run: |
+          version=$(python -c 'from setuptools_scm import get_version; print(get_version())')
+          echo "SETUPTOOLS_SCM_PRETEND_VERSION_FOR_ALCHEMY_VIZ=$version" >> "$GITHUB_ENV"
+          echo "building $version"
 
       # PyPI renders the long description at pypi.org/project/alchemy-viz/, where
       # a repository-relative URL resolves against that page rather than the
@@ -64,7 +75,7 @@ jobs:
       - name: the compiled bundle is inside the wheel
         run: |
           python - <<'PY'
-          import pathlib, zipfile, sys
+          import os, pathlib, zipfile, sys
 
           wheel = next(pathlib.Path("dist").glob("*.whl"))
           names = zipfile.ZipFile(wheel).namelist()
@@ -84,6 +95,17 @@ jobs:
               sys.exit(f"{wheel.name} ships a top-level tests package: {stray}")
 
           print(f"{wheel.name}: bundle is {size:,} bytes")
+
+          # A tag release must build exactly that version. This is what catches a
+          # dirty tree turning v0.1.3 into 0.1.4.dev0+g...; without it the first
+          # sign is PyPI rejecting the upload after every gate has passed.
+          ref = os.environ.get("GITHUB_REF", "")
+          if ref.startswith("refs/tags/v"):
+              expected = ref.removeprefix("refs/tags/v")
+              built = wheel.name.split("-")[1]
+              if built != expected:
+                  sys.exit(f"tag says {expected}, wheel says {built}. Is the tree dirty?")
+              print(f"version matches the tag: {built}")
           PY
 
       - run: twine check --strict dist/*
