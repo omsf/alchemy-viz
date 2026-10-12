@@ -17,20 +17,16 @@
  */
 
 /**
- * Where the built bundle comes from, newest path first.
+ * Where the built bundle comes from.
  *
  * jsDelivr serves any file in the public GitHub repo, so this tracks a branch
- * rather than a release. The package was renamed from gufe-viz to alchemy-viz,
- * and the two paths are the after and the before: when the rename reaches
- * `main` the first URL starts answering and the second stops being used.
+ * rather than a release: the frame redraws with whatever `main` carries later.
  */
-const BUNDLES = [
-  "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js",
-  "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@draft-upgrade-visualizations/python/gufe_viz/_assets/gufe-viz.js",
-];
+const BUNDLE =
+  "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js";
 
-/** The dispatcher element, under either of the names the package has used for it. */
-const TAGS = ["alchemy-view", "gufe-view"];
+/** The dispatcher element, the same one a generated page and a notebook widget mount. */
+const TAG = "alchemy-view";
 
 /** Input name -> the payload type it carries. */
 const NAME_TO_TYPE = {
@@ -105,24 +101,18 @@ function pickPayload(inputs) {
 /**
  * Load the bundle and answer with the tag it defined.
  *
- * Each URL is tried in turn: a 404 from the CDN is a failed import, not a
- * broken frame, and the next path along may well answer. The element name is
- * read back from the registry rather than assumed, because the package has
- * shipped under two of them.
+ * The element is looked up in the registry rather than assumed, so a bundle
+ * that loads but defines nothing fails here, with something to read, instead
+ * of further along as an empty stage.
  */
 async function loadPackage() {
-  const failures = [];
-  for (const url of BUNDLES) {
-    try {
-      await import(url);
-      const tag = TAGS.find((candidate) => customElements.get(candidate));
-      if (tag) return tag;
-      failures.push(`${url}: loaded but defined no view element`);
-    } catch (error) {
-      failures.push(`${url}: ${error.message}`);
-    }
+  try {
+    await import(BUNDLE);
+  } catch (error) {
+    throw new Error(`Could not load alchemy-viz from ${BUNDLE}\n${error.message}`);
   }
-  throw new Error(`Could not load alchemy-viz.\n${failures.join("\n")}`);
+  if (!customElements.get(TAG)) throw new Error(`${BUNDLE} loaded but defined no <${TAG}>`);
+  return TAG;
 }
 
 say("Loading alchemy-viz...");

@@ -72,20 +72,17 @@ That table mirrors `VIEW_TAGS` in `ts/src/alchemy-view.ts`. A payload under any
 other name still draws, as long as it carries a `type` the package knows - the
 name is only how the frame chooses between several inputs.
 
-## The bundle URLs
+## The bundle URL
 
-`BUNDLES` in the template is a fallback list, newest path first:
+`BUNDLE` in the template is the one path the bundle lives at:
 
-- `@main/python/alchemy_viz/_assets/alchemy-viz.js` - where the bundle lives
-  after the gufe-viz to alchemy-viz rename. As of 2026-09-15 `main` does not
-  carry it yet and this URL 404s, which the template treats as a miss, not an
-  error.
-- `@draft-upgrade-visualizations/python/gufe_viz/_assets/gufe-viz.js` - the
-  pre-rename path, and the one currently answering.
+- `@main/python/alchemy_viz/_assets/alchemy-viz.js`
 
-Keep both until the rename lands on `main`, then drop the second. The element
-name is read back from `customElements` rather than assumed, for the same
-reason: the package has shipped as both `alchemy-view` and `gufe-view`.
+The rename from gufe-viz to alchemy-viz has landed on `main`, so the pre-rename
+fallback and the old `gufe-view` element name are both gone - the bundle on
+`main` defines `alchemy-view` and nothing else. The template still reads the
+element out of `customElements` rather than assuming it, so a bundle that loads
+without defining the element says that, rather than leaving an empty stage.
 
 A frame pinned to a branch tracks that branch, so a frame made today can change
 under the user when the branch moves. Pin a tag or a commit sha instead when the
