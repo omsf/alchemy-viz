@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://raw.githubusercontent.com/omsf-eco-infra/alchemy-viz/main/schema/mol2d-style.schema.json",
+  "$id": "https://raw.githubusercontent.com/omsf/alchemy-viz/main/schema/mol2d-style.schema.json",
   "title": "alchemy-viz 2D depiction style",
   "description": "How a ligand pair is drawn in 2D. Separate from alchemy-viz.schema.json on purpose: that schema describes what a payload IS, and nothing in it comes from a person's taste. This one is entirely taste, it describes no gufe object, and it is authored by hand in the editor at https://framejs.app/j/5df86d91e8824b20a02908b52a6f07c3 rather than written by a payload builder. The editor draws real transformation pairs with these values live, then exports this document; drop the exported file over ts/src/shared/mol2d-style.json and it is compiled into the bundle. The editor's own panel is the reference for what each key does to the picture. Every key is optional: what is absent takes the built-in default. The built-in defaults reproduce the picture alchemy-viz drew before this document existed, with the exception of `layout` and `alignPair`, which default to what gufe itself does: gufe regenerates 2D coordinates and aligns the pair before drawing, and alchemy-viz did neither.",
   "type": "object",

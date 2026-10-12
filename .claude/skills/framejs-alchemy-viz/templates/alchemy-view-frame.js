@@ -25,8 +25,8 @@
  * `main` the first URL starts answering and the second stops being used.
  */
 const BUNDLES = [
-  "https://cdn.jsdelivr.net/gh/omsf-eco-infra/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js",
-  "https://cdn.jsdelivr.net/gh/omsf-eco-infra/alchemy-viz@draft-upgrade-visualizations/python/gufe_viz/_assets/gufe-viz.js",
+  "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js",
+  "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@draft-upgrade-visualizations/python/gufe_viz/_assets/gufe-viz.js",
 ];
 
 /** The dispatcher element, under either of the names the package has used for it. */

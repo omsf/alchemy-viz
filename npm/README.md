@@ -100,7 +100,7 @@ payload schema moves with the minor version while this is 0.x.
 
 ## Links
 
-- [Source and documentation](https://github.com/omsf-eco-infra/alchemy-viz)
-- [The payload schema](https://github.com/omsf-eco-infra/alchemy-viz/blob/main/schema/README.md)
+- [Source and documentation](https://github.com/omsf/alchemy-viz)
+- [The payload schema](https://github.com/omsf/alchemy-viz/blob/main/schema/README.md)
 
 MIT licensed.

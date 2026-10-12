@@ -34,7 +34,7 @@ that frame's source - start from it rather than writing a frame from scratch.
      "inputs": {
        "alchemical_network": {
          "type": "url",
-         "value": "https://cdn.jsdelivr.net/gh/omsf-eco-infra/alchemy-viz@main/examples/alchemical_network_medium.json"
+         "value": "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/examples/alchemical_network_medium.json"
        }
      }
    }

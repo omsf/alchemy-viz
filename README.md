@@ -55,7 +55,7 @@ npm install alchemy-viz
 ```ts
 import "alchemy-viz";
 // Or from a CDN with no build step:
-// import "https://cdn.jsdelivr.net/gh/omsf-eco-infra/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js";
+// import "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js";
 import type { AlchemyVizPayload } from "alchemy-viz";
 
 const payload: AlchemyVizPayload = await (await fetch("payload.json")).json();
@@ -86,7 +86,7 @@ while
 Requires [pixi](https://pixi.sh).
 
 ```bash
-git clone https://github.com/omsf-eco-infra/alchemy-viz.git
+git clone https://github.com/omsf/alchemy-viz.git
 cd alchemy-viz
 pixi install
 pixi run dev     # vite: /gallery.html, /gallery-all.html, /parity.html, / (dropzone)

@@ -4,14 +4,14 @@
   "description": "Browser visualizations for gufe and OpenFE objects: ligands, proteins, atom mappings, ligand networks and alchemical campaigns.",
   "license": "MIT",
   "author": "The OpenFE developers <openfe@omsf.io>",
-  "homepage": "https://github.com/omsf-eco-infra/alchemy-viz#readme",
+  "homepage": "https://github.com/omsf/alchemy-viz#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/omsf-eco-infra/alchemy-viz.git",
+    "url": "git+https://github.com/omsf/alchemy-viz.git",
     "directory": "npm"
   },
   "bugs": {
-    "url": "https://github.com/omsf-eco-infra/alchemy-viz/issues"
+    "url": "https://github.com/omsf/alchemy-viz/issues"
   },
   "keywords": [
     "alchemical-free-energy",

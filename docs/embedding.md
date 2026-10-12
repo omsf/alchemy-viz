@@ -30,7 +30,7 @@ The wheel ships the bundle at `alchemy_viz/_assets/alchemy-viz.js`, so an instal
 package is a copy you can serve from a website.
 
 ```
-https://cdn.jsdelivr.net/gh/omsf-eco-infra/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js
+https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js
 ```
 
 `to_html(obj)`: inlines the bundle and the payload into
