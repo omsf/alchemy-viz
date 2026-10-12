@@ -122,7 +122,9 @@ fi
 # The authority on whether a version is taken is the index, not the tags: 0.1.0
 # was uploaded by hand before any tag was pushed. PyPI never lets a version be
 # re-used, so finding it here is the last chance to notice.
-code=$(curl -fsS -o /dev/null -w '%{http_code}' "https://pypi.org/pypi/$PACKAGE/$version/json" 2>/dev/null || echo "000")
+# No -f: a 404 is the answer we want most of the time, and -f would make curl
+# exit non-zero while still printing the status, concatenating the two.
+code=$(curl -sS -o /dev/null -w '%{http_code}' "https://pypi.org/pypi/$PACKAGE/$version/json" 2>/dev/null) || code="000"
 case $code in
 404) echo "ok:          $tag is free, and $version is not on PyPI" ;;
 200) die "$version is already on PyPI. A version cannot be replaced; pick another." ;;
