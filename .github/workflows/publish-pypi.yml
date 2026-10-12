@@ -42,7 +42,19 @@ jobs:
         with:
           python-version: "3.12"
 
-      - run: python -m pip install --upgrade build twine
+      # readme_renderer[md] is what makes `twine check` below actually render the
+      # Markdown long description. Without it readme_renderer has no Markdown
+      # backend, and the check passes whatever it is given.
+      - run: python -m pip install --upgrade build twine 'readme_renderer[md]'
+
+      # PyPI renders the long description at pypi.org/project/alchemy-viz/, where
+      # a repository-relative URL resolves against that page rather than the
+      # repository: the screenshot 404s and every link into docs/ goes nowhere.
+      # GitHub resolves those same paths, so the committed README keeps them and
+      # this rewrites them here, in a throwaway checkout, leaving only the
+      # published metadata different.
+      - name: absolute README URLs for PyPI
+        run: python scripts/readme_abs_urls.py
 
       # The bundle is committed, so this needs no Node toolchain. If it were
       # missing from the wheel every page this package renders would be blank,
