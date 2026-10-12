@@ -138,6 +138,13 @@ jobs:
           path: dist/
 
       - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # 0.1.0 was uploaded by hand, before this workflow had ever run. Its
+          # tag is still pushed, so the gates above run against the commit that
+          # was released and the repository has a tag for every published
+          # version. Without this the upload step would fail on that one tag,
+          # for a version that is already on the index and correct.
+          skip-existing: true
 
   # The rehearsal. Same artifacts, same path, a throwaway index.
   publish-testpypi:
