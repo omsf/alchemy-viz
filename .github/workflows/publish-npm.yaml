@@ -10,9 +10,11 @@
 # be replaced.
 name: Release (npm)
 
+# The tag trigger is off until the npm package is ready to publish; restore it
+# to release on tag again. `workflow_dispatch` only ever dry-runs.
 on:
-  push:
-    tags: ["v*"]
+  # push:
+  #   tags: ["v*"]
   workflow_dispatch:
 
 permissions:
