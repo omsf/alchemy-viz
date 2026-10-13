@@ -46,7 +46,11 @@ html = to_html(obj)  # the same page as a string; writes nothing
 
 ### Embedding into a webpage
 
-Embed the visualization module directly into your own websites:
+Embed the visualization module directly into your own websites. Until the npm
+package is published, load the built bundle straight from this repository via
+jsDelivr, which serves files from public GitHub repos with a JavaScript MIME type:
+
+<!-- Once the npm package is published:
 
 ```bash
 npm install alchemy-viz
@@ -54,16 +58,20 @@ npm install alchemy-viz
 
 ```ts
 import "alchemy-viz";
-// Or from a CDN with no build step:
-// import "https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js";
 import type { AlchemyVizPayload } from "alchemy-viz";
-
-const payload: AlchemyVizPayload = await (await fetch("payload.json")).json();
-
-const view = document.createElement("alchemy-view");
-document.body.append(view);
-view.payload = payload;
 ```
+-->
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/gh/omsf/alchemy-viz@main/python/alchemy_viz/_assets/alchemy-viz.js"></script>
+<alchemy-view id="view" style="width:100%;height:600px"></alchemy-view>
+<script type="module">
+  const payload = await (await fetch("payload.json")).json();
+  document.getElementById("view").payload = payload;
+</script>
+```
+
+Replace `@main` with a tag (e.g. `@v0.1.4`) or commit SHA to pin a version.
 
 ## Documentation
 
